@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import * as FileSystem from 'expo-file-system';
+import { File } from 'expo-file-system';
 
 // Please replace this with your actual Gemini API key, or use environment variables in a real project
 const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
@@ -62,7 +62,7 @@ export default function ResultsScreen() {
         }
 
         // Read the image file into base64 right before sending
-        const base64 = await FileSystem.readAsStringAsync(imageUri, { encoding: 'base64' });
+        const base64 = await new File(imageUri).base64();
 
         // Prepare payload for Gemini 2.5 Flash using strict camelCase required by the REST API
         const payload = {
@@ -101,7 +101,11 @@ export default function ResultsScreen() {
         }
 
         const result = await response.json();
-        let textResponse = result.candidates[0].content.parts[0].text;
+        // Gemini can return no candidates or no text, e.g. when a response is blocked
+        let textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!textResponse) {
+          throw new Error("The AI did not return an analysis. Please try again with a different photo or description.");
+        }
 
         // Strip markdown if the AI hallucinated it
         if (textResponse.startsWith('```json')) {
