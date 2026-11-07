@@ -34,7 +34,7 @@ export default function CameraScreen() {
 
     try {
       setIsProcessing(true);
-      const photo = await cameraRef.current.takePictureAsync({ base64: true });
+      const photo = await cameraRef.current.takePictureAsync();
 
       if (!photo) throw new Error("Failed to capture photo");
 
