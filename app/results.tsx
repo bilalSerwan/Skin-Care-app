@@ -4,7 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 import * as FileSystem from 'expo-file-system';
 
 // Please replace this with your actual Gemini API key, or use environment variables in a real project
-const GEMINI_API_KEY = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
+const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
 
 const SYSTEM_INSTRUCTION = `You are an advanced, empathetic AI Dermatological and Skin Health Assistant. Your purpose is to analyze images of skin conditions alongside user-provided symptoms.
 
@@ -59,10 +59,6 @@ export default function ResultsScreen() {
       try {
         if (!imageUri || !symptoms) {
           throw new Error("Missing image or symptoms data.");
-        }
-
-        if (!GEMINI_API_KEY) {
-          throw new Error("Missing EXPO_PUBLIC_GEMINI_API_KEY. Add it to your .env file and restart Expo.");
         }
 
         // Read the image file into base64 right before sending
@@ -153,7 +149,7 @@ export default function ResultsScreen() {
       <SafeAreaView style={styles.centerContainer}>
         <Text style={styles.errorText}>Analysis Failed</Text>
         <Text style={styles.errorSubtext}>{error}</Text>
-        <Text style={styles.errorSubtext}>Please ensure EXPO_PUBLIC_GEMINI_API_KEY is set to a valid key in your .env file.</Text>
+        <Text style={styles.errorSubtext}>Please ensure you have set a valid GEMINI_API_KEY in the code.</Text>
       </SafeAreaView>
     );
   }

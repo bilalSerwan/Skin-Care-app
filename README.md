@@ -10,19 +10,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Add your Gemini API key
-
-   Create a `.env` file in the project root (it's ignored by git) containing:
-
-   ```bash
-   EXPO_PUBLIC_GEMINI_API_KEY=your-key-here
-   ```
-
-   Restart Expo after changing it.
-
-   > **Warning:** `EXPO_PUBLIC_` values are embedded in plain text in the compiled app, so anyone with the app can extract this key. Use this setup for local development only. Production builds should call Gemini through a backend that holds the key.
-
-3. Start the app
+2. Start the app
 
    ```bash
    npx expo start
